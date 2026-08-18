@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAUSHIK's Links</title>
+    <!-- Load Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind to use Inter font and custom colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        stylish: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-dark': '#18181b', // Zinc-900 (used for dark text)
+                        'secondary-dark': '#27272a', // Zinc-800
+                        'accent-green': '#25D366',
+                        'accent-blue': '#1877F2',
+                        'accent-red': '#EA4335',
+                        'accent-purple': '#E1306C',
+                        'accent-gold': '#FFD700',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base Page Setup */
+        body {
+            background-color: #000000;
+            overflow-x: hidden;
+        }
+
+        /* 60FPS Animated Blurred Liquid Wave Canvas Container */
+        .canvas-bg-container {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+            background: #000000;
+            filter: blur(55px);
+            -webkit-filter: blur(55px);
+            transform: translateZ(0);
+        }
+
+        #liquid-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Custom Link Card Styles */
+        .link-box {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 180px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background-color: rgba(18, 18, 20, 0.65);
+        }
+
+        /* Highlighted WhatsApp & Phone Call box styling */
+        .whatsapp-box,
+        .call-box {
+            min-height: 220px;
+        }
+
+        .link-box:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(24, 119, 242, 0.35);
+            border-color: rgba(56, 189, 248, 0.6);
+        }
+
+        .link-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            filter: blur(8px);
+            z-index: 1;
+        }
+
+        /* Define background icons */
+        .whatsapp-box::before {
+            background: radial-gradient(circle at center, rgba(37, 211, 102, 0.4) 0%, rgba(37, 211, 102, 0.08) 55%, transparent 100%);
+        }
+
+        .website-box::before {
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.35) 0%, rgba(168, 85, 247, 0.05) 55%, transparent 100%);
+        }
+
+        .instagram-box::before {
+            background: radial-gradient(circle at center, rgba(225, 48, 108, 0.4) 0%, rgba(225, 48, 108, 0.08) 55%, transparent 100%);
+        }
+
+        .gmail-box::before {
+            background: radial-gradient(circle at center, rgba(234, 67, 53, 0.4) 0%, rgba(234, 67, 53, 0.08) 55%, transparent 100%);
+        }
+
+        .facebook-box::before {
+            background: radial-gradient(circle at center, rgba(24, 119, 242, 0.4) 0%, rgba(24, 119, 242, 0.08) 55%, transparent 100%);
+        }
+
+        /* Ultra-Premium Frosted Liquid Metallic Glass Card (Matching Uploaded Image) */
+        .dev-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 2.25rem;
+            /* 36px Squircle */
+            padding: 1.75rem 1.25rem 1.25rem 1.25rem;
+            min-height: 250px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .dev-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .dev-glow-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 2.25rem;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0.9;
+            transition: opacity 0.35s ease;
+        }
+
+        .dev-card:hover .dev-glow-overlay {
+            opacity: 1;
+        }
+
+        /* 1. Amber / Flame Orange Liquid Metal Glass */
+        .dev-card-amber {
+            background: radial-gradient(circle at 60% 50%, rgba(18, 12, 10, 0.96) 0%, rgba(35, 18, 12, 0.92) 100%);
+            box-shadow:
+                inset 0 0 0 1.5px rgba(251, 146, 60, 0.35),
+                inset 0 4px 25px rgba(249, 115, 22, 0.2),
+                inset 0 -15px 30px rgba(249, 115, 22, 0.1),
+                0 25px 50px -12px rgba(0, 0, 0, 0.85);
+        }
+
+        .dev-card-amber .dev-glow-overlay {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 15% 90%, rgba(251, 146, 60, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(249, 115, 22, 0.3) 0%, transparent 50%);
+        }
+
+        .dev-card-amber:hover {
+            box-shadow:
+                inset 0 0 0 2px rgba(251, 146, 60, 0.65),
+                inset 0 6px 35px rgba(249, 115, 22, 0.35),
+                inset 0 -20px 40px rgba(249, 115, 22, 0.25),
+                0 30px 60px -10px rgba(249, 115, 22, 0.3);
+        }
+
+        /* 2. Sapphire Blue Liquid Metal Glass */
+        .dev-card-blue {
+            background: radial-gradient(circle at 60% 50%, rgba(8, 12, 20, 0.96) 0%, rgba(15, 25, 45, 0.92) 100%);
+            box-shadow:
+                inset 0 0 0 1.5px rgba(96, 165, 250, 0.35),
+                inset 0 4px 25px rgba(59, 130, 246, 0.2),
+                inset 0 -15px 30px rgba(59, 130, 246, 0.1),
+                0 25px 50px -12px rgba(0, 0, 0, 0.85);
+        }
+
+        .dev-card-blue .dev-glow-overlay {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 15% 90%, rgba(96, 165, 250, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+        }
+
+        .dev-card-blue:hover {
+            box-shadow:
+                inset 0 0 0 2px rgba(96, 165, 250, 0.65),
+                inset 0 6px 35px rgba(59, 130, 246, 0.35),
+                inset 0 -20px 40px rgba(59, 130, 246, 0.25),
+                0 30px 60px -10px rgba(59, 130, 246, 0.3);
+        }
+
+        /* 3. Emerald Green Liquid Metal Glass */
+        .dev-card-green {
+            background: radial-gradient(circle at 60% 50%, rgba(8, 18, 12, 0.96) 0%, rgba(12, 32, 20, 0.92) 100%);
+            box-shadow:
+                inset 0 0 0 1.5px rgba(74, 222, 128, 0.35),
+                inset 0 4px 25px rgba(34, 197, 94, 0.2),
+                inset 0 -15px 30px rgba(34, 197, 94, 0.1),
+                0 25px 50px -12px rgba(0, 0, 0, 0.85);
+        }
+
+        .dev-card-green .dev-glow-overlay {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 15% 90%, rgba(74, 222, 128, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(34, 197, 94, 0.3) 0%, transparent 50%);
+        }
+
+        .dev-card-green:hover {
+            box-shadow:
+                inset 0 0 0 2px rgba(74, 222, 128, 0.65),
+                inset 0 6px 35px rgba(34, 197, 94, 0.35),
+                inset 0 -20px 40px rgba(34, 197, 94, 0.25),
+                0 30px 60px -10px rgba(34, 197, 94, 0.3);
+        }
+
+        /* 4. Neon Purple Liquid Metal Glass */
+        .dev-card-purple {
+            background: radial-gradient(circle at 60% 50%, rgba(16, 8, 20, 0.96) 0%, rgba(28, 12, 38, 0.92) 100%);
+            box-shadow:
+                inset 0 0 0 1.5px rgba(192, 132, 252, 0.35),
+                inset 0 4px 25px rgba(168, 85, 247, 0.2),
+                inset 0 -15px 30px rgba(168, 85, 247, 0.1),
+                0 25px 50px -12px rgba(0, 0, 0, 0.85);
+        }
+
+        .dev-card-purple .dev-glow-overlay {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 15% 90%, rgba(192, 132, 252, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(168, 85, 247, 0.3) 0%, transparent 50%);
+        }
+
+        .dev-card-purple:hover {
+            box-shadow:
+                inset 0 0 0 2px rgba(192, 132, 252, 0.65),
+                inset 0 6px 35px rgba(168, 85, 247, 0.35),
+                inset 0 -20px 40px rgba(168, 85, 247, 0.25),
+                0 30px 60px -10px rgba(168, 85, 247, 0.3);
+        }
+
+        /* 5. Golden Yellow Liquid Metal Glass */
+        .dev-card-gold {
+            background: radial-gradient(circle at 60% 50%, rgba(20, 16, 8, 0.96) 0%, rgba(38, 30, 10, 0.92) 100%);
+            box-shadow:
+                inset 0 0 0 1.5px rgba(250, 204, 21, 0.35),
+                inset 0 4px 25px rgba(234, 179, 8, 0.2),
+                inset 0 -15px 30px rgba(234, 179, 8, 0.1),
+                0 25px 50px -12px rgba(0, 0, 0, 0.85);
+        }
+
+        .dev-card-gold .dev-glow-overlay {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 15% 90%, rgba(250, 204, 21, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(234, 179, 8, 0.3) 0%, transparent 50%);
+        }
+
+        .dev-card-gold:hover {
+            box-shadow:
+                inset 0 0 0 2px rgba(250, 204, 21, 0.65),
+                inset 0 6px 35px rgba(234, 179, 8, 0.35),
+                inset 0 -20px 40px rgba(234, 179, 8, 0.25),
+                0 30px 60px -10px rgba(234, 179, 8, 0.3);
+        }
+
+        .call-box::before {
+            background: radial-gradient(circle at center, rgba(24, 119, 242, 0.35) 0%, rgba(24, 119, 242, 0.05) 60%, transparent 100%);
+        }
+
+        .link-content {
+            z-index: 2;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            padding: 1rem;
+        }
+
+        #name-heading {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            display: inline-block;
+            min-width: calc(7ch + 8px);
+            position: relative;
+        }
+
+        #name-heading::after {
+            content: " ";
+            display: inline-block;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+            color: #FFD700;
+        }
+
+        /* Smooth Continuous Harmonic Wind Flow for Lanyard & ID Card Assembly */
+        .id-card-grid-item {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            animation: continuousFluidWind 5s linear infinite;
+            transform-origin: calc(50% + 48.5px) -500px;
+            perspective: 1200px;
+            will-change: transform;
+        }
+
+        /* Visible Blue Fabric Lanyard Strap - Perfectly locked with ID Card Clip */
+        .top-lanyard-strap {
+            position: absolute;
+            bottom: calc(100% - 130px);
+            top: -500px;
+            width: 46.5px;
+            left: calc(50% + 48.5px);
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #1d4ed8 0%, #3b82f6 50%, #1e40af 100%);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5), 0 0 14px rgba(29, 78, 216, 0.5);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 20;
+            transition: box-shadow 0.3s ease, filter 0.3s ease;
+        }
+
+        .top-lanyard-strap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255, 255, 255, 0.12) 2px, rgba(255, 255, 255, 0.12) 4px);
+        }
+
+        /* 1st Part: ID Card without Strap (id_card1.png) Static in Row 1 Level with WhatsApp */
+        .row1-floating-card {
+            position: relative;
+            z-index: 25;
+            width: 100%;
+            max-width: 285px;
+            margin: -115px auto 0 auto;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top center;
+        }
+
+        @media (max-width: 768px) {
+            .id-card-grid-item {
+                transform-origin: 50% -250px;
+                margin-top: 10px;
+                margin-bottom: 0px;
+            }
+
+            .top-lanyard-strap {
+                top: -250px;
+                width: 38px;
+                left: calc(50% + 40px);
+                bottom: calc(100% - 100px);
+            }
+
+            .row1-floating-card {
+                margin-top: 15px;
+                max-width: 235px;
+            }
+        }
+
+        .id-card-1-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.75));
+            transition: filter 0.3s ease;
+        }
+
+        /* Unified Hover Effect - Both Blue Strap & ID Card Glow & Scale Together in Sync */
+        .id-card-grid-item:hover .row1-floating-card {
+            transform: scale(1.03);
+        }
+
+        .id-card-grid-item:hover .id-card-1-img {
+            filter: drop-shadow(0 35px 60px rgba(24, 119, 242, 0.75));
+        }
+
+        .id-card-grid-item:hover .top-lanyard-strap {
+            box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.5), 0 0 25px rgba(59, 130, 246, 0.95);
+            filter: brightness(1.25);
+        }
+
+        /* Continuous Orbital Harmonic Loop (Zero Stop / Smooth 60FPS Velocity Vector) */
+        @keyframes continuousFluidWind {
+            0% {
+                transform: translateX(-24px) translateY(-5px) rotate(-3deg) rotateY(-7deg) rotateX(3deg);
+            }
+
+            12.5% {
+                transform: translateX(-12px) translateY(5px) rotate(-1.5deg) rotateY(-3deg) rotateX(-2deg);
+            }
+
+            25% {
+                transform: translateX(0px) translateY(8px) rotate(0deg) rotateY(0deg) rotateX(-4deg);
+            }
+
+            37.5% {
+                transform: translateX(14px) translateY(3px) rotate(1.8deg) rotateY(4deg) rotateX(-1deg);
+            }
+
+            50% {
+                transform: translateX(24px) translateY(-6px) rotate(3.2deg) rotateY(7deg) rotateX(3deg);
+            }
+
+            62.5% {
+                transform: translateX(12px) translateY(-10px) rotate(1.5deg) rotateY(3deg) rotateX(4deg);
+            }
+
+            75% {
+                transform: translateX(0px) translateY(-8px) rotate(0deg) rotateY(0deg) rotateX(1deg);
+            }
+
+            87.5% {
+                transform: translateX(-14px) translateY(-8px) rotate(-1.8deg) rotateY(-4deg) rotateX(2deg);
+            }
+
+            100% {
+                transform: translateX(-24px) translateY(-5px) rotate(-3deg) rotateY(-7deg) rotateX(3deg);
+            }
+        }
+
+        /* Dual-layer Overlay Text Header Effect (Image 2 style) */
+        .dual-text-heading {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.8rem 0 1.2rem 0;
+            margin-top: 3.5rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .dual-text-bg {
+            position: absolute;
+            top: 28%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(2.4rem, 5.8vw, 4.2rem);
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.11);
+            user-select: none;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 0;
+            font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .dual-text-fg {
+            position: relative;
+            z-index: 10;
+            font-size: clamp(2.1rem, 4.8vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: #ffffff;
+            display: inline-block;
+            padding-bottom: 0.4rem;
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-white font-sans flex flex-col items-center p-4 relative bg-black">
+
+    <!-- 60FPS Fluid Liquid Wave Animation Canvas Layer -->
+    <div class="canvas-bg-container">
+        <canvas id="liquid-canvas"></canvas>
+    </div>
+
+    <!-- Link Boxes Grid Container -->
+    <main class="w-full max-w-6xl p-4 relative z-10">
+        <!-- Responsive Grid Layout: 2 columns on small/medium screens, 3 columns on large screens -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 items-start">
+
+            <!-- Header with Typing Animation (Desktop: Full Row 1; Mobile: Order 2 under ID Card) -->
+            <header id="main-header"
+                class="col-span-2 md:col-span-3 py-4 md:py-8 relative z-10 text-center order-2 md:order-1">
+                <h1 class="text-5xl font-extrabold text-center tracking-tight text-accent-gold sm:text-7xl md:text-8xl">
+                    <span id="name-heading"></span>
+                </h1>
+                <p class="text-center mt-2 text-zinc-400 text-sm md:text-base">Navigate to my digital world.</p>
+            </header>
+
+            <!-- 0. ID Card Component (Mobile: Order 1 at top; Desktop: Row 2, Col 1) -->
+            <div class="col-span-2 md:col-span-1 id-card-grid-item order-1 md:order-2">
+                <!-- Visible Blue Woven Fabric Lanyard Strap Extending to Top of Screen -->
+                <div class="top-lanyard-strap"></div>
+
+                <!-- ID Card without Strap (id_card1.png) -->
+                <div class="row1-floating-card">
+                    <a href="https://kaushik7477.github.io/kaushikweb/" target="_blank"
+                        title="KAUSHIK - Web Developer Portfolio">
+                        <img src="img/id_card1.png" alt="KAUSHIK ID Card" class="id-card-1-img" />
+                    </a>
+                </div>
+            </div>
+
+            <!-- 1. WhatsApp (Highlighted & Bigger) (Mobile: Order 3 under header text; Desktop: Row 2, Col 2) -->
+            <a id="whatsapp-link" href="https://wa.me/7477310465/?text=Hello kaushik" target="_blank"
+                class="col-span-1 md:col-span-1 link-box whatsapp-box bg-accent-green/20 border-2 border-accent-green rounded-xl shadow-lg hover:shadow-accent-green/50 order-3 md:order-3">
+                <div class="link-content">
+                    <svg class="w-12 h-12 md:w-16 md:h-16 text-accent-green mb-2 mx-auto" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    <p class="text-xl md:text-2xl font-bold mt-2 text-white">WhatsApp</p>
+                    <p class="text-xs md:text-sm text-zinc-300">Chat with me instantly</p>
+                </div>
+            </a>
+
+            <!-- 2. Phone Call (Highlighted & Bigger) (Mobile: Order 4 under header text; Desktop: Row 2, Col 3) -->
+            <a id="phone-link" href="tel:7477310465"
+                class="col-span-1 md:col-span-1 link-box call-box bg-accent-blue/20 border-2 border-accent-blue rounded-xl shadow-lg hover:shadow-accent-blue/50 order-4 md:order-4">
+                <div class="link-content">
+                    <svg class="w-12 h-12 md:w-16 md:h-16 text-accent-blue mb-2 mx-auto" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                    <p class="text-xl md:text-2xl font-bold mt-2 text-white">Phone Call</p>
+                    <p class="text-xs md:text-sm text-zinc-300">7477310465</p>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Section Heading: Developing -->
+        <div class="dual-text-heading">
+            <span class="dual-text-bg">DEVELOPING</span>
+            <div class="relative z-10 text-center">
+                <h2 class="dual-text-fg border-b-2 border-accent-gold">Developing</h2>
+                <p class="text-sm text-zinc-400 mt-2">Projects &amp; platforms currently under active development</p>
+            </div>
+        </div>
+
+        <!-- 5 Developing Project Boxes (1 box per row on mobile) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mb-14">
+
+            <!-- 1. Men's Clothing Platform -->
+            <a href="https://thesoulstich.com/" target="_blank"
+                class="dev-card dev-card-amber group flex flex-col items-center justify-between text-center p-6 min-h-[250px]">
+                <div class="dev-glow-overlay"></div>
+
+                <!-- Center Big Logo (No border, big size, centered) -->
+                <div class="relative z-10 flex flex-col items-center justify-center my-auto w-full px-2">
+                    <img src="img/logo4.png" alt="Men's Clothing Platform"
+                        class="h-20 md:h-24 max-w-[160px] object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-300 mb-3" />
+                    <h3 class="text-sm md:text-base font-medium font-stylish text-zinc-100 tracking-wide mt-1">Men's
+                        Clothing Platform</h3>
+                </div>
+
+                <!-- Bottom Light Gray Click Me Text -->
+                <div
+                    class="relative z-10 text-xs font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors mt-4">
+                    <span>click me</span>
+                </div>
+            </a>
+
+            <!-- 2. E-comarce women's Clothing -->
+            <a href="https://riyathnic.onrender.com/" target="_blank"
+                class="dev-card dev-card-blue group flex flex-col items-center justify-between text-center p-6 min-h-[340px]">
+                <div class="dev-glow-overlay"></div>
+
+                <!-- Center Big Logo (No border, big size, centered) -->
+                <div class="relative z-10 flex flex-col items-center justify-center my-auto w-full px-2">
+                    <div class="overflow-hidden flex items-center justify-center w-[180px] h-[130px] md:w-[260px] md:h-[180px] mb-5 md:mb-7">
+                        <img src="img/logo3.png" alt="E-comarce women's Clothing"
+                            class="w-[420px] h-auto md:w-[620px] object-contain filter drop-shadow-[0_8px_20px_rgba(59,130,246,0.65)] group-hover:scale-[1.1] transition-transform duration-300" />
+                    </div>
+                    <h3 class="text-sm md:text-base font-medium font-stylish text-zinc-100 tracking-wide mt-1">E-comarce
+                        women's Clothing</h3>
+                </div>
+
+                <!-- Bottom Light Gray Click Me Text -->
+                <div
+                    class="relative z-10 text-xs font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors mt-4">
+                    <span>click me</span>
+                </div>
+            </a>
+
+            <!-- 3. A tech company -->
+            <a href="https://mitelogix.in/" target="_blank"
+                class="dev-card dev-card-purple group flex flex-col items-center justify-between text-center p-6 min-h-[250px]">
+                <div class="dev-glow-overlay"></div>
+
+                <!-- Center Big Logo (No border, big size, centered) -->
+                <div class="relative z-10 flex flex-col items-center justify-center my-auto w-full px-2">
+                    <img src="img/Logo2.png" alt="A tech company"
+                        class="h-20 md:h-24 max-w-[160px] object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-300 mb-3" />
+                    <h3 class="text-sm md:text-base font-medium font-stylish text-zinc-100 tracking-wide mt-1">A tech
+                        company</h3>
+                </div>
+
+                <!-- Bottom Light Gray Click Me Text -->
+                <div
+                    class="relative z-10 text-xs font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors mt-4">
+                    <span>click me</span>
+                </div>
+            </a>
+
+            <!-- 4. Photographer image gallery -->
+            <a href="https://golpochobi.in/" target="_blank"
+                class="dev-card dev-card-green group flex flex-col items-center justify-between text-center p-6 min-h-[250px]">
+                <div class="dev-glow-overlay"></div>
+
+                <!-- Center Big Logo (No border, big size, centered) -->
+                <div class="relative z-10 flex flex-col items-center justify-center my-auto w-full px-2">
+                    <img src="img/LOGO1.png" alt="Photographer image gallery"
+                        class="h-20 md:h-24 max-w-[160px] object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-300 mb-3" />
+                    <h3 class="text-sm md:text-base font-medium font-stylish text-zinc-100 tracking-wide mt-1">
+                        Photographer image gallery</h3>
+                </div>
+
+                <!-- Bottom Light Gray Click Me Text -->
+                <div
+                    class="relative z-10 text-xs font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors mt-4">
+                    <span>click me</span>
+                </div>
+            </a>
+
+            <!-- 5. a Premium jewellery brand -->
+            <a href="https://gopysrigold.com/" target="_blank"
+                class="dev-card dev-card-gold group flex flex-col items-center justify-between text-center p-6 min-h-[250px]">
+                <div class="dev-glow-overlay"></div>
+
+                <!-- Center Big Logo (No border, big size, centered) -->
+                <div class="relative z-10 flex flex-col items-center justify-center my-auto w-full px-2">
+                    <img src="img/logo5.png" alt="a Premium jewellery brand"
+                        class="h-20 md:h-24 max-w-[160px] object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-300 mb-3" />
+                    <h3 class="text-sm md:text-base font-medium font-stylish text-zinc-100 tracking-wide mt-1">a Premium
+                        jewellery brand</h3>
+                </div>
+
+                <!-- Bottom Light Gray Click Me Text -->
+                <div
+                    class="relative z-10 text-xs font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors mt-4">
+                    <span>click me</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Section Heading: Social & Contact -->
+        <div class="dual-text-heading">
+            <span class="dual-text-bg">SOCIAL</span>
+            <div class="relative z-10 text-center">
+                <h2 class="dual-text-fg border-b-2 border-accent-blue">Social</h2>
+                <p class="text-sm text-zinc-400 mt-2">Connect with me across social platforms or send a message</p>
+            </div>
+        </div>
+
+        <!-- Social & Contact Grid (Instagram, Gmail, Facebook, GitHub) (2 boxes per row on mobile) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 items-start">
+
+            <!-- 3. Instagram -->
+            <a id="instagram-link" href="https://www.instagram.com/kaushik_halder_/" target="_blank"
+                class="link-box bg-secondary-dark border-2 border-zinc-700 rounded-xl shadow-md hover:shadow-zinc-700/50">
+                <div class="link-content">
+                    <svg class="w-16 h-16 text-accent-purple mb-2" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    <p class="text-lg font-semibold mt-2 text-white">Instagram</p>
+                    <p class="text-xs text-zinc-400">See my latest photos</p>
+                </div>
+            </a>
+
+            <!-- 4. Gmail -->
+            <a id="gmail-link" href="mailto:kaushikhalder101@gmail.com" target="_blank"
+                class="link-box bg-secondary-dark border-2 border-zinc-700 rounded-xl shadow-md hover:shadow-zinc-700/50">
+                <div class="link-content">
+                    <svg class="w-16 h-16 text-accent-red mb-2" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
+                    </svg>
+                    <p class="text-lg font-semibold mt-2 text-white">Gmail</p>
+                    <p class="text-xs text-zinc-400">Send me an email</p>
+                </div>
+            </a>
+
+            <!-- 5. Facebook -->
+            <a id="facebook-link" href="https://www.facebook.com/koushik.h.0" target="_blank"
+                class="link-box bg-secondary-dark border-2 border-zinc-700 rounded-xl shadow-md hover:shadow-zinc-700/50">
+                <div class="link-content">
+                    <svg class="w-16 h-16 text-accent-blue mb-2" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                    <p class="text-lg font-semibold mt-2 text-white">Facebook</p>
+                    <p class="text-xs text-zinc-400">Follow my updates</p>
+                </div>
+            </a>
+
+            <!-- 6. GitHub -->
+            <a id="github-link" href="https://github.com/kaushik7477" target="_blank"
+                class="link-box bg-secondary-dark border-2 border-zinc-700 rounded-xl shadow-md hover:shadow-zinc-700/50">
+                <div class="link-content">
+                    <svg class="w-16 h-16 text-white mb-2 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                    <p class="text-lg font-semibold mt-2 text-white">GitHub</p>
+                    <p class="text-xs text-zinc-400">View code &amp; projects</p>
+                </div>
+            </a>
+
+        </div>
+        <p class="text-center mt-12 text-zinc-400 text-sm">© 2025 KAUSHIK. All rights reserved.</p>
+    </main>
+
+    <script>
+        // === Typing Animation Script ===
+        const headingElement = document.getElementById('name-heading');
+        const nameToType = "KAUSHIK";
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 150;
+        let deleteSpeed = 100;
+        let delayBeforeDeleting = 2000;
+
+        function typeWriter() {
+            const currentText = headingElement.textContent;
+
+            if (!isDeleting) {
+                // Typing forward
+                if (charIndex < nameToType.length) {
+                    headingElement.textContent = currentText + nameToType[charIndex];
+                    charIndex++;
+                    setTimeout(typeWriter, typingSpeed);
+                } else {
+                    // Start deleting after a delay
+                    isDeleting = true;
+                    setTimeout(typeWriter, delayBeforeDeleting);
+                }
+            } else {
+                // Deleting backward
+                if (currentText.length > 0) {
+                    headingElement.textContent = currentText.substring(0, currentText.length - 1);
+                    setTimeout(typeWriter, deleteSpeed);
+                } else {
+                    // Start typing again
+                    isDeleting = false;
+                    charIndex = 0;
+                    setTimeout(typeWriter, typingSpeed * 3); // Longer pause before re-typing
+                }
+            }
+        }
+
+        // === 60FPS Fluid Liquid Wave Background Animation (Royal Blue Theme) ===
+        const canvas = document.getElementById('liquid-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let step = 0;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function renderLiquidWaves() {
+            // Base pitch black background
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, width, height);
+
+            step += 0.005; // Slightly slower, elegant fluid wave speed
+
+            // Wave Layer 1: Deep Midnight Sapphire Base Wave
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+            for (let x = 0; x <= width; x += 15) {
+                const y = height * 0.65 +
+                    Math.sin(x * 0.0025 + step * 0.8) * 80 +
+                    Math.cos(x * 0.0018 + step * 0.6) * 45;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.closePath();
+
+            let grad1 = ctx.createLinearGradient(0, height * 0.4, width, height);
+            grad1.addColorStop(0, 'rgba(10, 25, 47, 0.95)');
+            grad1.addColorStop(0.5, 'rgba(13, 59, 102, 0.9)');
+            grad1.addColorStop(1, 'rgba(24, 119, 242, 0.85)');
+            ctx.fillStyle = grad1;
+            ctx.fill();
+
+            // Wave Layer 2: Electric Cobalt Royal Blue Main Wave
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+            for (let x = 0; x <= width; x += 15) {
+                const y = height * 0.6 +
+                    Math.sin(x * 0.003 - step * 1.0) * 100 +
+                    Math.sin(x * 0.005 + step * 0.9) * 55;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.closePath();
+
+            let grad2 = ctx.createLinearGradient(width * 0.1, height * 0.3, width * 0.95, height);
+            grad2.addColorStop(0, 'rgba(3, 7, 18, 0.9)');
+            grad2.addColorStop(0.45, 'rgba(14, 116, 233, 0.98)');
+            grad2.addColorStop(0.85, 'rgba(2, 132, 199, 0.95)');
+            ctx.fillStyle = grad2;
+            ctx.fill();
+
+            // Wave Layer 3: Glowing Electric Azure Sky Highlights
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+            for (let x = 0; x <= width; x += 15) {
+                const y = height * 0.7 +
+                    Math.cos(x * 0.0032 + step * 1.2) * 65 +
+                    Math.sin(x * 0.0014 - step * 0.7) * 50;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.closePath();
+
+            let grad3 = ctx.createLinearGradient(0, height * 0.5, width, height);
+            grad3.addColorStop(0, 'rgba(15, 23, 42, 0.75)');
+            grad3.addColorStop(0.55, 'rgba(37, 99, 235, 0.9)');
+            grad3.addColorStop(1, 'rgba(56, 189, 248, 0.92)');
+            ctx.fillStyle = grad3;
+            ctx.fill();
+
+            requestAnimationFrame(renderLiquidWaves);
+        }
+
+        // Start animations on window load
+        window.onload = function () {
+            typeWriter();
+            renderLiquidWaves();
+        };
+    </script>
+</body>
+
+</html>
